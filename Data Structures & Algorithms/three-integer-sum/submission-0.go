@@ -9,7 +9,7 @@ func threeSum(nums []int) [][]int {
 	k:=0
 
 	results := [][]int{}
-	for k < len(nums){
+	for k < len(nums)-2 && nums[k] <=0{
 		if k!=0 && nums[k] == nums[k-1]{
 			k++
 			continue
