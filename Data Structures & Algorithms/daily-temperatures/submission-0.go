@@ -17,9 +17,5 @@ func dailyTemperatures(temperatures []int) []int {
 		stack = append(stack,[2]int{t,j})
 	}
 
-	for _, remain:=range stack{
-		i:=remain[1]
-		results[i] = 0
-	}
 	return results
 }
