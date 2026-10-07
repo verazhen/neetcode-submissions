@@ -1,38 +1,29 @@
 func isValidSudoku(board [][]byte) bool {
-	lineExistArr:= [9]map[int]struct{}{}
-	colExistArr:= [9]map[int]struct{}{}
-	squareExistArr:= [9]map[int]struct{}{}
-
-	for i:=0;i <9;i++{
-			lineExistArr[i] = map[int]struct{}{}
-			colExistArr[i] = map[int]struct{}{}
-			squareExistArr[i] = map[int]struct{}{}
-	}
-
+	lineExistArr   := [9]int{}
+	colExistArr    := [9]int{}
+	squareExistArr := [9]int{}
 
 	for i,line:=range board{
-		for j,content:=range line{
-			if string(content) == "."{
-				continue
-			}
-
-			num,err:=strconv.Atoi(string(content))
-			if err!=nil{
+		for j,b:=range line{
+			if b == '.'{
 				continue
 			}
 			k:=getSquareIndex(i,j)
 
-			if _,ok:=lineExistArr[i][num];ok{
+			mask:=1 << (b-'1')
+
+
+			if lineExistArr[i] & mask != 0{
 				return false
-			}else if _,ok:=colExistArr[j][num];ok{
+			}else if colExistArr[j] & mask != 0{
 				return false
-			}else if _,ok:=squareExistArr[k][num];ok{
+			}else if squareExistArr[k] & mask != 0{
 				return false
 			}
 
-			lineExistArr[i][num] = struct{}{}
-			colExistArr[j][num] = struct{}{}
-			squareExistArr[k][num] = struct{}{}
+			lineExistArr[i] = lineExistArr[i] | mask
+			colExistArr[j] = colExistArr[j] | mask
+			squareExistArr[k] = squareExistArr[k] | mask
 		}
 	}
 
