@@ -1,32 +1,33 @@
 func isPalindrome(s string) bool {
-	
-	arr := []string{}
-	for _,r := range s{
-		if !(r >= 'a' && r <= 'z') && !(r >= 'A' && r <= 'Z') && !(r >= '0' && r <= '9'){
+	i := 0
+	j := len(s)-1
+
+	for i < j{
+		l := s[i]
+		r := s[j]
+		if !checkCharacterValid(l) {
+			i++
+			continue
+		}else if !checkCharacterValid(r) {
+			j--
 			continue
 		}
-		str := strings.ToLower(string(r))
-		arr = append(arr,str)
-	}
-	halfLength := len(arr)/2 
-
-	wordStack := []string{}
-	for i,str := range arr{
-		
-		if i < halfLength{
-			//push
-			wordStack = append(wordStack, str)
-		}else if len(arr)%2 == 1 && i == halfLength{
-			//do nothing
-		}else{
-			//pop
-			pop := wordStack[len(wordStack)-1]
-			wordStack = wordStack[0:len(wordStack)-1]
-			if str != pop {
-				return false
-			}
+		if toLower(l) != toLower(r) {
+			return false
 		}
-		continue
+		i++
+		j--
 	}
 	return true
+}
+
+func checkCharacterValid (r byte)bool{
+	return (r >= 'a' && r <= 'z') || (r >= 'A' && r <= 'Z') || (r >= '0' && r <= '9')
+}
+
+func toLower(c byte) byte {
+    if c >= 'A' && c <= 'Z' {
+        return c + ('a' - 'A')
+    }
+    return c
 }
